@@ -66,6 +66,7 @@ def check(data):
     pattern = r'59485a53'                      # 定义分隔符
     result = re.split(pattern, data) # 以pattern的值 分割字符串
     for each in result:
+        print(each)#各个包除包头外的内容
         pass
         #TODO:依次检测包内容判断相关信息
 
@@ -154,9 +155,9 @@ class datapck:
 #TODO：实现接收包后的识别，传入格式，用串口读入后的形式？
 
 if __name__ == '__main__':
-    # pck=orderpck(1,1,240,320)
-    # result=pck.pack()
-    # for i in range(len(result)):
-    #     print("%02x"%result[i],end=" ") 
-    # print("")
+    pck=orderpck(1,1,240,320)
+    result=pck.pack()
+    for i in range(len(result)):
+        print("%02x"%result[i],end=" ") 
+    print("")
     check("59485a530100000011010100f00140b4ec59485a535151651651")
