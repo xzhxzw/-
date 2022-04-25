@@ -9,8 +9,9 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtSerialPort import QSerialPort, QSerialPortInfo
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtWebEngineWidgets import *
-from Ui_SerialPort import Ui_Form
+from Embeded import Ui_Form
 from PyQt5.QtCore import QDate
+from PyQt5 import QtGui
 
 class MyMainWindow(QMainWindow, Ui_Form):
     def __init__(self, parent=None):
@@ -20,15 +21,13 @@ class MyMainWindow(QMainWindow, Ui_Form):
         self.CreateItems()
         # 设置信号与槽
         self.CreateSignalSlot()
-        
+        self.photo.setPixmap(QtGui.QPixmap('./3.jpg').scaled(self.photo.width(), self.photo.height()) )
+        QApplication.setApplicationDisplayName("Embeded PC")
+        self.setWindowIcon(QtGui.QIcon('./emo1.ico'))
     # 设置实例 
     def CreateItems(self):
         # Qt 串口类
         self.com = QSerialPort()
-        # Qt 定时器类
-        self.timer = QTimer(self) #初始化一个定时器
-        self.timer.timeout.connect(self.ShowTime) #计时结束调用operate()方法
-        self.timer.start(100) #设置计时间隔 100ms 并启动
     
     # 设置信号与槽
     def CreateSignalSlot(self):
@@ -39,17 +38,7 @@ class MyMainWindow(QMainWindow, Ui_Form):
         self.com.readyRead.connect(self.Com_Receive_Data) # 接收数据
         self.hexSending_checkBox.stateChanged.connect(self.hexShowingClicked)
         self.hexSending_checkBox.stateChanged.connect(self.hexSendingClicked)
-        self.About_Button.clicked.connect(self.Goto_GitHub)
-        
-    # 跳转到 GitHub 查看源代码
-    def Goto_GitHub(self):
-        self.browser = QWebEngineView()
-        self.browser.load(QUrl('https://github.com/Oslomayor/PyQt5-SerialPort-Stable'))
-        self.setCentralWidget(self.browser)
-    
-    # 显示时间
-    def ShowTime(self):
-        self.Time_Label.setText(time.strftime("%B %d, %H:%M:%S", time.localtime()))
+
         
     # 串口发送数据
     def Com_Send_Data(self):
