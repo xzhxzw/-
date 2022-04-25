@@ -6,7 +6,7 @@ import numpy as np
 import re
 
 def img2rgb():
-    img = np.array(Image.open('2.jpg'))
+    img = np.array(Image.open('3.jpg'))
     print(img.shape)
     width = img.shape[1]
     height = img.shape[0]
